@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCLE Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f2efe8;--sf:#e8e4da;--s2:#ddd8cc;--bd:#c8c0b0;--tx:#18140c;--t2:#4a4538;--t3:#8a8070;--ac:#1a50c0;--tl:#1a7060;--am:#a06810}
+[data-theme="dark"]{--bg:#0f1117;--sf:#181c27;--s2:#1e2336;--bd:#2a3050;--tx:#e8eaf2;--t2:#8b92b8;--t3:#555e85;--ac:#4f8ef7;--tl:#38b890;--am:#e8a838}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.hub{width:100%;max-width:480px;display:flex;flex-direction:column;gap:0}
+.header{text-align:center;padding-bottom:32px}
+.badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);margin-bottom:14px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(36px,8vw,52px);font-weight:900;line-height:1.1;color:var(--tx);margin-bottom:12px}
+h1 em{font-style:normal;color:var(--tx)}
+.subtitle{color:var(--t2);font-size:15px;line-height:1.6}
+.divider{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+.divider span{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
+.cards{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.card{display:flex;align-items:center;gap:16px;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-2px)}
+.card.blue:hover{border-color:var(--ac);box-shadow:0 6px 24px rgba(26,80,192,.12)}
+.card.teal:hover{border-color:var(--tl);box-shadow:0 6px 24px rgba(26,112,96,.12)}
+.icon-wrap{width:48px;height:48px;border-radius:12px;background:var(--s2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.card-text{flex:1}
+.card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.card.blue .card-label{color:var(--ac)}
+.card.teal .card-label{color:var(--tl)}
+.card-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--tx);margin-bottom:4px}
+.card-desc{font-size:13px;color:var(--t2);line-height:1.5}
+.arrow{font-size:20px;color:var(--t3);transition:transform .2s,color .2s;flex-shrink:0}
+.card:hover .arrow{transform:translate(3px,-3px)}
+.card.blue:hover .arrow{color:var(--ac)}
+.card.teal:hover .arrow{color:var(--tl)}
+.footer{text-align:center;font-size:12px;color:var(--t3);line-height:1.9;padding-top:8px;border-top:1px solid var(--bd)}
+.footer strong{color:var(--t2);font-weight:600}
+.footer .tag{display:block;font-style:normal;color:var(--tx);font-size:13px;margin-top:4px}
+.theme-btn{position:fixed;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s}
+.theme-btn:hover{border-color:var(--ac)}
+@media(max-width:400px){.card{padding:16px;gap:13px}.icon-wrap{width:42px;height:42px;font-size:20px}.card-title{font-size:18px}}
+</style>
+</head>
+<body>
+
+<button class="theme-btn" id="thbtn" onclick="toggleTheme()">🌙</button>
+
+<div class="hub">
+
+  <div class="header">
+    <div class="badge">FCLE · Florida Civic Literacy Exam</div>
+    <h1>PHSC Porter Campus<br><em>ASC FCLE Study Hub</em></h1>
+    <p class="subtitle">Everything you need to pass the FCLE,<br>in one place.</p>
+  </div>
+
+  <div class="divider"><span>Choose a tool</span></div>
+
+  <div class="cards">
+
+    <a class="card blue" href="StudyTool.html">
+      <div class="icon-wrap">📖</div>
+      <div class="card-text">
+        <div class="card-label">Reference</div>
+        <div class="card-title">Study Tool</div>
+        <div class="card-desc">100+ topics across 4 competencies · Overview, history, cases &amp; exam tips · Finals Guide</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card teal" href="Flashcards.html">
+      <div class="icon-wrap">🗂️</div>
+      <div class="card-text">
+        <div class="card-label">Practice</div>
+        <div class="card-title">Flashcards</div>
+        <div class="card-desc">89 cards · Study mode · Filter by competency · Flag for review · Anki export</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <strong>PHSC Academic Support Center</strong> · Porter Campus Tutors<br>
+    Built to help every student pass the Florida Civic Literacy Exam<br>
+    <span class="tag">Happy studying! — Sleepy Ius</span>
+  </div>
+
+</div>
+
+<script>
+var btn = document.getElementById('thbtn');
+function applyTheme(dark) {
+  document.documentElement[dark?'setAttribute':'removeAttribute']('data-theme','dark');
+  btn.textContent = dark ? '☀️' : '🌙';
+  localStorage.setItem('fcleHubTheme', dark ? 'dark' : 'light');
+}
+function toggleTheme() { applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark'); }
+(function(){ applyTheme(localStorage.getItem('fcleHubTheme') === 'dark'); })();
+</script>
+
+</body>
+</html>
