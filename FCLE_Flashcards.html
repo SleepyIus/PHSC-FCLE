@@ -27,7 +27,7 @@ a.back:hover{color:var(--accent)}
 .topbar-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;flex:1}
 .topbar-title span{color:var(--accent)}
 .icon-btn{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
-.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+.icon-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 /* ── LAYOUT ── */
 .page{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
 /* ── FILTER ROW ── */
@@ -124,6 +124,9 @@ a.back:hover{color:var(--accent)}
   <div id="gridView"></div>
   <div id="studyView">
     <div class="study-wrap">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+        <button class="icon-btn" id="shuffleBtn" onclick="toggleShuffle()">🔀 Shuffle</button>
+      </div>
       <div class="study-prog-bar"><div class="study-prog-fill" id="studyProg"></div></div>
       <div class="study-meta">
         <span class="study-counter" id="studyCtr">1 / 1</span>
@@ -254,7 +257,16 @@ const CARDS = [
 
 // ── STATE ──
 const status = {}; // '' | 'review' | 'maybe'
-let curCat = 'all', curStatus = '', isStudy = false, studyDeck = [], studyIdx = 0, studyFlipped = false;
+let curCat = 'all', curStatus = '', isStudy = false, studyDeck = [], studyIdx = 0, studyFlipped = false, isShuffled = false;
+
+function shuffleArr(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 // ── CATEGORIES ──
 const CATS = [...new Set(CARDS.map(c => c.cat))];
@@ -286,6 +298,13 @@ function buildFilters() {
   row.appendChild(al);
 }
 
+function toggleShuffle() {
+  isShuffled = !isShuffled;
+  document.getElementById('shuffleBtn').classList.toggle('on', isShuffled);
+  if (isStudy) { buildStudyDeck(); renderStudy(); }
+  else { renderGrid(); }
+}
+
 function setFilter(cat, st) {
   if (st && curStatus === st) { curStatus = ''; }
   else if (st) { curStatus = st; cat = curCat; }
@@ -302,11 +321,12 @@ function setFilter(cat, st) {
 }
 
 function getDeck() {
-  return CARDS.filter(c => {
+  const filtered = CARDS.filter(c => {
     if (curCat !== 'all' && c.cat !== curCat) return false;
     if (curStatus && status[c.q] !== curStatus) return false;
     return true;
   });
+  return isShuffled ? shuffleArr(filtered) : filtered;
 }
 
 // ── STATS ──
