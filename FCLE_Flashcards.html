@@ -40,6 +40,10 @@ a.back:hover{color:var(--accent)}
 .filt.al{border-color:var(--amber);color:var(--amber)}
 .filt.al.on{background:var(--amber);color:#fff}
 .spacer{flex:1}
+.study-mode-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+.study-mode-btn:hover{opacity:.85}
+.study-mode-btn.active{background:transparent;color:var(--accent);border-color:var(--accent)}
+.spacer{flex:1}
 /* ── STATS ROW ── */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;text-align:center}
@@ -104,9 +108,8 @@ a.back:hover{color:var(--accent)}
 <body>
 <div class="topbar-wrap" id="topbarWrap">
   <div class="topbar" id="topbar">
-    <a class="back" href="index.html">← Hub</a>
+    <a class="back" href="index.html">← Back to Hub</a>
     <div class="topbar-title">FCLE <span>Flashcards</span></div>
-    <button class="icon-btn" id="modeBtn" onclick="toggleMode()">📖 Study Mode</button>
     <button class="icon-btn" onclick="exportAnki()">⬇ Anki Export</button>
     <button class="icon-btn" onclick="exportQuizlet()">⬇ Quizlet Export</button>
     <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
@@ -296,6 +299,10 @@ function buildFilters() {
   al.id = 'filtAl';
   al.onclick = () => setFilter(curCat,'maybe');
   row.appendChild(al);
+  const sm = mk('button','study-mode-btn','📖 Study Mode');
+  sm.id = 'modeBtn';
+  sm.onclick = toggleMode;
+  row.appendChild(sm);
 }
 
 function toggleShuffle() {
@@ -411,7 +418,9 @@ function toggleMode() {
   isStudy = !isStudy;
   document.getElementById('gridView').style.display = isStudy ? 'none' : 'grid';
   document.getElementById('studyView').style.display = isStudy ? 'block' : 'none';
-  document.getElementById('modeBtn').textContent = isStudy ? '⊞ Grid View' : '📖 Study Mode';
+  const btn = document.getElementById('modeBtn');
+  btn.textContent = isStudy ? '⊞ Grid View' : '📖 Study Mode';
+  btn.classList.toggle('active', isStudy);
   if (isStudy) { buildStudyDeck(); renderStudy(); }
   updateStats();
 }
