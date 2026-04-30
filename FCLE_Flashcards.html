@@ -104,6 +104,7 @@ a.back:hover{color:var(--accent)}
   <div class="topbar-title">FCLE <span>Flashcards</span></div>
   <button class="icon-btn" id="modeBtn" onclick="toggleMode()">📖 Study Mode</button>
   <button class="icon-btn" onclick="exportAnki()">⬇ Anki Export</button>
+  <button class="icon-btn" onclick="exportQuizlet()">⬇ Quizlet Export</button>
   <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
 </div>
 <div class="page">
@@ -411,6 +412,27 @@ function exportAnki() {
   const a = document.createElement('a');
   a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
   a.download = 'FCLE_Flashcards.txt';
+  a.click();
+}
+
+function exportQuizlet() {
+  // Quizlet import format: term and definition separated by tab, cards separated by newline
+  // Strip HTML tags from answers for clean Quizlet text
+  function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  }
+  const deck = getDeck();
+  let txt = '';
+  deck.forEach(c => {
+    const term = c.q.replace(/\t/g, ' ');
+    const def = stripHtml(c.a).replace(/\t/g, ' ').replace(/\n+/g, ' ').trim();
+    txt += `${term}\t${def}\n`;
+  });
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+  a.download = 'FCLE_Quizlet.txt';
   a.click();
 }
 
